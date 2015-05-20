@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>万年历</title>
+  <link rel="stylesheet" type="text/css" href="reset.css">
+  <style type="text/css">
+/*.date-con{border: 1px solid #ccc; width: 180px; padding: 10px; margin: 100px;}
+.date-con ul{overflow: hidden;}
+.date-con ul li{float: left; width: 60px; height: 60px; background: #eee; text-align: center; padding-top: 14px; box-sizing: border-box;}
+.date-con ul li.current,
+.date-con ul li:hover{background: #ddd;}
+.to-do{padding: 10px; height: 60px; background: #f6f6f6;}*/
+pre{border: 1px solid #ccc; padding: 10px; margin: 20px;}
+li{height: 40px;}
+  </style>
+</head>
+<body>
+	<ul id="ull">
+      <li>1</li>
+      <li class="box2">2</li>
+      <li class="box">3</li>
+      <li>4</li>
+      <li class="box">5</li>
+      <li class="box2">6</li>
+      <li class="box">7</li>
+	</ul>
+</body>
+<script type="text/javascript">
+
+function getByClass(oParent, sClass){
+	var result=[];
+	var aEle = oParent.getElementsByTagName('*');
+	console.log(2,aEle.length);
+	for(var i = 0; i < aEle.length; i++){
+		console.log(aEle[i]);
+
+		if(aEle[i].className==sClass){
+		   console.log(4);
+           result.push(aEle[i]);
+		}
+	}
+	return result;
+  }
+window.onload=function(){
+  var oUll = document.getElementById('ull');
+  var oli = oUll.getElementsByTagName('li');
+  for(var i =0; i < oli.length; i++){
+  	if(oli[i].className=='box'){
+  		oli[i].style.background='red';
+  	}
+  }
+
+  var oli2 = getByClass(oUll,'box2');
+  //alert(oli2);
+  for(var i =0; i< oli2.length; i++){
+	oli2[i].style.background='blue';
+  }
+};
+
+
+
+</script>
+</html>

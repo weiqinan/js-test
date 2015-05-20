@@ -1,7 +1,110 @@
-<style type="text/css">
-.big-select{height: 40px; font-size: 26px;}
-.mm-btn{height: 40px; font-size: 20px;}
-table{font-size: 20px;}
-.finder-list th,
-.finder-list td{padding: 10px 5px;}
-</style>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>万年历</title>
+  <link rel="stylesheet" type="text/css" href="reset.css">
+  <style type="text/css">
+.date-con{border: 1px solid #ccc; width: 180px; padding: 10px; margin: 100px;}
+.date-con ul{overflow: hidden;}
+.date-con ul li{float: left; width: 60px; height: 60px; background: #eee; text-align: center; padding-top: 14px; box-sizing: border-box;}
+.date-con ul li.current,
+.date-con ul li:hover{background: #ddd;}
+.to-do{padding: 10px; height: 60px; background: #f6f6f6;}
+pre{border: 1px solid #ccc; padding: 10px; margin: 20px;}
+  </style>
+</head>
+<body>
+	<pre>
+	  var str='gsmsg';
+  // alert(str[2]);
+  //alert(str.charAt(2));
+	</pre>
+
+	<div class="date-con" id="date_con">
+		<ul>
+			<li>
+				1月<br/>
+				20日
+			</li>
+			<li>
+				2月
+				<br/>
+				20日
+			</li>
+			<li class="current">
+				3月
+				<br/>
+				20日
+			</li>
+			<li>
+				4月
+				<br/>
+				20日
+			</li>
+			<li>
+				5月
+				<br/>
+				20日
+			</li>
+			<li>
+				6月
+				<br/>
+				20日
+			</li>
+			<li>
+				7月
+				<br/>
+				20日
+			</li>
+			<li>
+				8月
+				<br/>
+				20日
+			</li>
+			<li>
+				9月
+				<br/>
+				20日
+			</li>
+		</ul>
+		<div class="to-do" id="to_do">
+			<b>3月活动</b><br/>
+			若为令忆 洞庭 春，上有閒云可隐身3
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+window.onload=function(){
+  var date_con = document.getElementById('date_con');
+  var li_list = date_con.getElementsByTagName('li');
+  var to_do = document.getElementById('to_do');
+
+  var arr=['若为令忆 洞庭 春，上有閒云可隐身1',
+           '若为令忆 洞庭 春，上有閒云可隐身2',
+           '若为令忆 洞庭 春，上有閒云可隐身3',
+           '若为令忆 洞庭 春，上有閒云可隐身4',
+           '若为令忆 洞庭 春，上有閒云可隐身5',
+           '若为令忆 洞庭 春，上有閒云可隐身6',
+           '若为令忆 洞庭 春，上有閒云可隐身7',
+           '若为令忆 洞庭 春，上有閒云可隐身8',
+           '若为令忆 洞庭 春，上有閒云可隐身9'
+          ];
+  for (var i =0; i< li_list.length; i++) {
+  	
+  	
+  	li_list[i].index=i;
+  	li_list[i].onmouseover=function(){
+  	  for (var j =0; j< li_list.length; j++){
+       li_list[j].className='';
+  	  }
+
+      this.className='current';
+      to_do.innerHTML='<b>'+(this.index+1)+'月活动</b><br/>'+arr[this.index];
+
+  	};
+  }
+
+};
+</script>
+</html>

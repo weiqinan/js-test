@@ -1,0 +1,59 @@
+*{padding: 0; margin: 0;}
+body,input{font-family: "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;}
+a,label, :focus {outline: 0 none;}
+a,img {border: 0 none;}
+a{text-decoration: none;}
+a:hover{text-decoration: underline;}
+em,i{font-style: normal;}
+ul,li,ol,dl{list-style: none;}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+button,input,select,textarea{margin:0;font-size:100%;vertical-align:middle; font-family: "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;}
+button,input.btn{*overflow:visible;line-height:normal;}
+button::-moz-focus-inner,input::-moz-focus-inner{padding:0;border:0;}
+button,input[type="button"],input[type="reset"],input[type="submit"]{cursor:pointer;-webkit-appearance:button;}
+input[type="search"]{-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;-webkit-appearance:textfield;}
+input[type="search"]::-webkit-search-decoration,input[type="search"]::-webkit-search-cancel-button{-webkit-appearance:none;}
+.clearfix:before,
+.clearfix:after{display:block;content:"\20";height:0;clear:both;overflow:hidden;visibility:hidden;}
+.clearfix{*zoom:1;}
+html,body{ font-size: 12px;}
+
+input::-moz-placeholder,
+textarea::-moz-placeholder{color:#606060;font-weight:400}
+::-webkit-input-placeholder{color:#606060;font-weight:400}
+input:-ms-input-placeholder{color:#606060;font-weight:400}
+::-ms-clear{display:none}
+::-ms-reveal{display:none}
+
+.dis-ib{display: inline-block;}
+
+.tl-c{text-align: center;}
+.tl-r{text-align: right;}
+.tl-l{text-align: left;}
+.pos-r{position: relative;}
+.td-u{text-decoration: underline; color:#8e6a55;}/* 针对有下划线的链接 */
+.td-u:hover{color:#432818;}
+.error-tip{color: #ff7e00;}
+
+.light-color{color: #8d1516;}
+
+
+.space10{margin-left: 10px;}
+.space20{margin-left: 20px;}
+.space-l40{margin-left: 40px;}
+
+.mar-t-b-20{margin-top: 20px; margin-bottom: 20px;}
+
+.hide{display: none!important;}
+.fl-l{float: left;}
+.fl-r{float: right;}
+.vl-m{vertical-align: middle;}
+
+.pointer{cursor: pointer;}
+a.normal-a{color:#8e6a55;} /*默认a链接样式*/
+a.normal-a:hover{color:#432818; text-decoration:none; }
+
+
