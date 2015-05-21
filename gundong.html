@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <style>
+    *{margin: 0; padding: 0;}
+.slider-con{margin: 100px; overflow: hidden; width: 880px; border: 1px solid #eee; position: relative; height: 220px;}
+.slider-ul{overflow: hidden; position: absolute; left: 0; top: 0;}
+.slider-ul li{float: left; padding: 10px; list-style: none; width: 200px; height: 200px; overflow: hidden;}
+.slider-ul li img{display: block; width: 100%; height: 100%;}
+
+.btn{margin: 20px; width: 120px; height: 40px; background: #eee; border:1px solid #ccc; text-align: center; line-height: normal; border-radius: 10px; cursor: pointer;}
+.btn:focus{outline:0 none;}
+    </style>
+</head>
+<body>
+  <input type="button" class="btn" value="向左" id="btn1" />
+  <input type="button" class="btn" value="向右" id="btn2" />
+  <div class="slider-con" id="slider_con">
+    <ul class="slider-ul" id="slider_ul">
+      <li><img src="img/1-1.jpg"/></li>
+      <li><img src="img/1-2.jpg"/></li>
+      <li><img src="img/1-3.jpg"/></li>
+      <li><img src="img/1-4.jpg"/></li>
+    </ul>
+  </div>
+</body>
+<script type="text/javascript">
+var btn1 = document.getElementById('btn1');
+var btn2 = document.getElementById('btn2');
+
+var slider_con = document.getElementById('slider_con');
+var slider_ul = document.getElementById('slider_ul');
+var timer = '';
+slider_ul.innerHTML+=slider_ul.innerHTML;
+var li_li = slider_ul.getElementsByTagName('li');
+slider_ul.style.width = li_li.length*220+'px';
+console.log(slider_ul.innderHTML);
+var speed = -4; //决定向左还是向右的速度和方向
+
+function show(){
+  //console.log(22);
+  //alert(slider_ul.offsetLeft);
+  if( slider_ul.offsetLeft <  -slider_ul.offsetWidth/2 ){
+    slider_ul.style.left = '0';
+  }
+
+  //向左滚动
+  //slider_ul.style.left = slider_ul.offsetLeft - 4 +'px';
+  //向右滚动
+  if( slider_ul.offsetLeft > 0 ){
+    slider_ul.style.left = - slider_ul.offsetWidth/2 +'px';
+  }
+  slider_ul.style.left = slider_ul.offsetLeft + speed +'px';
+
+}
+//show();
+timer=setInterval(show,20);
+
+slider_con.onmouseover = function(){
+  clearInterval(timer);
+};
+
+slider_con.onmouseleave = function(){
+  timer=setInterval(show,20);
+};
+
+btn1.onclick=function(){
+  speed = -4;
+};
+
+btn2.onclick=function(){
+  speed = 4;
+};
+
+</script>
+</html>
