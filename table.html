@@ -15,11 +15,18 @@
 		hover行变色的时候需要一个变量来存一下之前的颜色。当移出鼠标的时候才能恢复到原来的颜色去。<br/>
     这里删除行要用tbody来删除<br/>
     每行递增的id删除后不应该再有<br/>
+    模糊查询 otd.innerHTML.search(search_area.value) > -1 <br/>
+    多组查询 <b>循环套循环的时候最好i不要混用</b> var arr = search_area.value.split(' ');
 	</p>
 	<h4>隔行变色</h4>
+  <h4>添加和删除行</h4>
   <input type="text" id="uName" />
   <input type="text" id="uOld" />
-  <input type="button" id="btn1" value="添加" />
+  <input type="button" id="btn1" value="添加" /><br/>
+  <input type="text" id="search_area" />
+  <input type="button" id="btn2" value="绝对查询" />
+  <input type="button" id="btn3" value="模糊查询" />
+  <input type="button" id="btn4" value="多组查询" />
 	<table id="table">
       <thead>
       	<td>ID</td>
@@ -30,7 +37,7 @@
       <tbody>
         <tr>
           <td>123</td>
-          <td>sd富商大贾1</td>
+          <td>sd富商大贾51</td>
           <td>345</td>
           <td></td>
         </tr>
@@ -82,49 +89,104 @@
 
 // };
 
+// window.onload=function(){
+//   var table = document.getElementById('table');
+//   var uName = document.getElementById('uName');
+//   var uOld = document.getElementById('uOld');
+//   var btn1 = document.getElementById('btn1');
+
+//   var otr = table.tBodies[0].rows;
+//   // 记录当前行的数字然后便于后面自增
+//   var uid = otr.length+1;
+
+//   //添加行
+//   btn1.onclick=function(){
+
+//     //console.log(uName.value,uOld.value);
+//     var newtr = document.createElement('tr');
+//     var otd1 = document.createElement('td');
+//     otd1.innerHTML = uid++;
+//     newtr.appendChild(otd1);
+
+//     var otd2 = document.createElement('td');
+//     otd2.innerHTML = uName.value;
+//     newtr.appendChild(otd2);
+
+//     var otd3 = document.createElement('td');
+//     otd3.innerHTML = uOld.value;
+//     newtr.appendChild(otd3);
+
+//     var otd4 =document.createElement('td');
+//     otd4.innerHTML='<a href="#">删除</a>';
+//     newtr.appendChild(otd4);
+
+//     otd4.getElementsByTagName('a')[0].onclick=function(){
+//       //这里删除行要用tbody来删除
+//       table.tBodies[0].removeChild(this.parentNode.parentNode);
+//       return false;
+//     };
+
+//     table.tBodies[0].appendChild(newtr);
+
+//   };
+
+// };
+
 window.onload=function(){
   var table = document.getElementById('table');
-  var uName = document.getElementById('uName');
-  var uOld = document.getElementById('uOld');
-  var btn1 = document.getElementById('btn1');
+  var search_area = document.getElementById('search_area');
+  var btn2 = document.getElementById('btn2');
+  var btn3 = document.getElementById('btn3');
+  var btn4 = document.getElementById('btn4');
 
   var otr = table.tBodies[0].rows;
-  // 记录当前行的数字然后便于后面自增
-  var uid = otr.length+1;
 
 
-  //添加行
-  btn1.onclick=function(){
-
-    //console.log(uName.value,uOld.value);
-    var newtr = document.createElement('tr');
-    var otd1 = document.createElement('td');
-    otd1.innerHTML = uid++;
-    newtr.appendChild(otd1);
-
-    var otd2 = document.createElement('td');
-    otd2.innerHTML = uName.value;
-    newtr.appendChild(otd2);
-
-    var otd3 = document.createElement('td');
-    otd3.innerHTML = uOld.value;
-    newtr.appendChild(otd3);
-
-    var otd4 =document.createElement('td');
-    otd4.innerHTML='<a href="#">删除</a>';
-    newtr.appendChild(otd4);
-
-    otd4.getElementsByTagName('a')[0].onclick=function(){
-      //这里删除行要用tbody来删除
-      table.tBodies[0].removeChild(this.parentNode.parentNode);
-      return false;
+  //绝对查询
+  btn2.onclick=function(){
+    for (var i = otr.length - 1; i >= 0; i--) {
+      var otd = otr[i].getElementsByTagName('td')[1];
+      if( otd.innerHTML==search_area.value){
+        otd.parentNode.style.background='yellow';
+      }else{
+        otd.parentNode.style.background='';
+      }
     };
-
-    table.tBodies[0].appendChild(newtr);
 
   };
 
+  //模糊查询
+  btn3.onclick=function(){
+    alert()
+    for (var i = otr.length - 1; i >= 0; i--) {
+      var otd = otr[i].getElementsByTagName('td')[1];
+      if( otd.innerHTML.search(search_area.value) > -1 ){
+        otd.parentNode.style.background='yellow';
+      }else{
+        otd.parentNode.style.background='';
+      }
+    };
 
+  };
+
+  //多组查询
+  btn4.onclick=function(){
+    for (var i = otr.length - 1; i >= 0; i--) {
+      var otd = otr[i].getElementsByTagName('td')[1];
+      var arr = search_area.value.split(' ');
+      //console.log(arr);
+      otd.parentNode.style.background='';
+      for (var j = arr.length - 1; j >= 0; j--) {
+        //console.log('ge',otd.innerHTML);
+        if( otd.innerHTML.search(arr[j]) > -1 ){
+          //console.log(2);
+          otd.parentNode.style.background='yellow';
+        }
+      }
+
+    };
+
+  };
 
 
 };
