@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>DOM高级应用1-table</title>
+  <link rel="stylesheet" type="text/css" href="reset.css">
+  <style type="text/css">
+  table{margin: 100px;}
+  table td{padding: 10px; border: 1px solid #eee; }
+  </style>
+</head>
+<body>
+	<p>tBodies、 rows 、 cells 、 tHead 、tFoot<br/>
+		id删除了默认不让重用了。<br/>
+		hover行变色的时候需要一个变量来存一下之前的颜色。当移出鼠标的时候才能恢复到原来的颜色去。
+	</p>
+	<h4>隔行变色</h4>
+	<table id="table">
+      <thead>
+      	<td>ID</td>
+      	<td>姓名</td>
+      	<td>年龄</td>
+      </thead>
+      <tbody>
+        <tr>
+          <td>123</td>
+          <td>sd富商大贾1</td>
+          <td>345</td>
+        </tr>
+        <tr>
+          <td>1231</td>
+          <td>sd富商大贾2</td>
+          <td>389</td>
+        </tr>
+        <tr>
+          <td>1232</td>
+          <td>sd富商大贾3</td>
+          <td>3454</td>
+        </tr>
+        <tr>
+          <td>1233</td>
+          <td>sd富商大贾4</td>
+          <td>342</td>
+        </tr>
+        <tr>
+          <td>1234</td>
+          <td>sd富商大贾5</td>
+          <td>34545</td>
+        </tr>
+      </tbody>
+	</table>
+</body>
+<script type="text/javascript">
+window.onload=function(){
+	var table = document.getElementById('table');
+	var otr = table.tBodies[0].rows;
+	var oldColor='';
+	for (var i = otr.length - 1; i >= 0; i--) {
+		if(i%2){
+			otr[i].style.background='#eee';
+		}
+		//hover变色
+		otr[i].onmouseover=function(){
+			oldColor = this.style.background;
+            this.style.background='#ccc';
+		};
+		otr[i].onmouseout=function(){
+			this.style.background=oldColor;
+		};
+	}
+
+
+
+};
+
+</script>
+</html>
