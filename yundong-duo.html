@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>多物体运动</title>
+  <link rel="stylesheet" type="text/css" href="reset.css">
+  <style type="text/css">
+pre{border: 1px solid #ccc; padding: 10px; margin: 20px;}
+li{height: 40px;}
+#yundong div{width: 100px; height: 100px; background: #eee; margin: 20px;}
+  .opc{width: 100px; height: 100px; margin:20px; float: left; background: red; fliter:alpha(opacity:30);
+  	opacity: .3;}
+  </style>
+</head>
+<body>
+	<p>
+		/* 默认三个单独每次单独hover的时候正常，
+当移动的快的时候之前的定时器被干掉而且停住在那了。 */<br/>
+给每个obj自定义一个timmer，每次开关也是单独控制独有的timer.<br/>
+关键代码：
+<pre>
+oDiv[i].timer=null;
+clearInterval(obj.timer);
+obj.timer=setInterval(function(){},30);
+if(obj.offsetWidth==iTarget){
+  clearInterval(obj.timer);
+}else{
+		//...
+}
+</pre>
+
+	</p>
+<div id="yundong">
+	<div></div>
+	<div></div>
+	<div></div>
+</div>
+
+<div style="overflow:hidden; height:120px;" id="jianyin">
+	<div class="opc"></div>
+	<div class="opc"></div>
+	<div class="opc"></div>
+	<div class="opc"></div>
+</div>
+</body>
+<script type="text/javascript">
+window.onload=function(){
+	var parent = document.getElementById('yundong');
+	var oDiv = parent.getElementsByTagName('div');
+	var jianyin = document.getElementById('jianyin');
+    var oOpc = jianyin.getElementsByTagName('div');
+
+	for (var i = oDiv.length - 1; i >= 0; i--) {
+       oDiv[i].timer=null;
+
+		oDiv[i].onmouseover=function(){
+          starMove(this,400);
+		};
+
+		oDiv[i].onmouseout=function(){
+          starMove(this,100);
+		};
+
+	}
+
+	for (var i = oOpc.length - 1; i >= 0; i--) {
+        oOpc[i].alpha=30;
+        oOpc[i].timer=null;
+
+		oOpc[i].onmouseover=function(){
+          starOpacity(this,100);
+		};
+
+		oOpc[i].onmouseout=function(){
+          starOpacity(this,30);
+		};
+
+	}
+};
+
+var timer='null';
+/* 默认三个单独每次单独hover的时候正常，
+当移动的快的时候之前的定时器被干掉而且停住在那了。 */
+// 演示1
+// function starMove (obj,iTarget) {
+// 	clearInterval(timer);
+// 	timer=setInterval(function(){
+// 		var speed =(iTarget-obj.offsetWidth)/6;
+// 		speed=speed>0?Math.ceil(speed):Math.floor(speed);
+// 		if(obj.offsetWidth==iTarget){
+// 			clearInterval(timer);
+// 		}else{
+// 			obj.style.width=obj.offsetWidth+speed+'px';
+// 		}
+
+// 	}.30);
+// }
+
+//给每个obj自定义一个timmer，每次开关也是单独控制独有的timer.
+// 演示2
+function starMove (obj,iTarget) {
+	clearInterval(obj.timer);
+	obj.timer=setInterval(function(){
+		var speed =(iTarget-obj.offsetWidth)/6;
+		speed=speed>0?Math.ceil(speed):Math.floor(speed);
+		if(obj.offsetWidth==iTarget){
+			clearInterval(obj.timer);
+		}else{
+			obj.style.width=obj.offsetWidth+speed+'px';
+		}
+
+	}, 30);
+}
+
+// div淡入淡出
+//var alpha=30;
+
+function starOpacity (obj,iTarget) {
+	clearInterval(obj.timer);
+	obj.timer=setInterval(function(){
+		var speed =(iTarget-obj.alpha)/6;
+		speed=speed>0?Math.ceil(speed):Math.floor(speed);
+		if(obj.alpha==iTarget){
+			clearInterval(obj.timer);
+		}else{
+			obj.alpha+=speed;
+			//console.log(alpha);
+			obj.style.filter='alpha(opacity:'+obj.alpha+')';
+			obj.style.opacity=obj.alpha/100;
+		}
+
+	}, 30);
+}
+</script>
+</html>
