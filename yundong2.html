@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>js运动基础-缓冲运动</title>
+  <link rel="stylesheet" type="text/css" href="reset.css">
+  <style type="text/css">
+.qiu{width: 200px; height: 200px; background: #eee;
+border-radius: 100px; position: absolute; left:800px;/*left: 200.8px;*/
+top:100px;}
+.line{position: absolute; left: 300px; height: 300px; width: 1px; background: #000; top: 0;}
+</style>
+
+</head>
+<body>
+<p>缓冲运动，速度和距离成正比的。距离越大速度越快，距离越小速度越小<br/>
+当speed为小数时，offsetLeft会四舍五入改变style.left计算成offsetLeft，
+一定程度上导致最终距离为一个定值，所以看起来不动了。但实际上没有移动到最终的300的一个绝对值。<br/>
+Math.ceil(8.2);//向上取整。9<br/>
+Math.floor(4.5);//向下取整4<br/>
+向右移动则向上取整，速度为正，且越来越小，最后speed值要无限接近于0。<br/>
+向左移动则向下取整，速度为负，因为最后速度要无限接近于0。
+
+
+  </p>
+  <br/>
+  <div style="position:relative">
+    <input type="button" value="运动" id="btn1" />
+
+    <div class="qiu" id="qiu"></div>
+    <div class="line"></div>
+  </div>
+
+
+</body>
+<script type="text/javascript">
+window.onload=function(){
+  var btn1 = document.getElementById('btn1'),
+       qiu = document.getElementById('qiu'),
+    share = document.getElementById('share'),
+    timmer = null;
+    //alert(qiu.offsetLeft);
+
+  //匀速运动
+  btn1.onclick=function(){
+    move();
+  };
+
+  function move(){
+    //clearInterval(timmer);
+    timmer = setInterval(function(){
+      var speed = (300-qiu.offsetLeft)/10;
+      speed=speed>0?Math.ceil(speed):Math.floor(speed);
+      //console.log(speed,qiu.offsetLeft);
+      if(qiu.offsetLeft==300){
+        clearInterval(timmer);
+      }else{
+        qiu.style.left=qiu.offsetLeft+speed+'px';
+      }
+
+
+    },30);
+  }
+
+};
+</script>
+</html>

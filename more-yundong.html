@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>多物体运动</title>
+  <link rel="stylesheet" type="text/css" href="reset.css">
+  <style type="text/css">
+pre{border: 1px solid #ccc; padding: 10px; margin: 20px;}
+li{height: 40px;}
+#yundong div{width: 100px; height: 100px; background: #eee; margin: 20px;border: 10px solid #ccc;}
+  .opc{width: 100px; height: 100px; margin:20px; float: left; background: red; fliter:alpha(opacity:30);
+    opacity: .3; }
+  </style>
+</head>
+<body>
+  <p>
+    /* 默认三个单独每次单独hover的时候正常，
+当移动的快的时候之前的定时器被干掉而且停住在那了。 */<br/>
+给每个obj自定义一个timmer，每次开关也是单独控制独有的timer.<br/>
+关键代码：
+<pre>
+oDiv[i].timer=null;
+clearInterval(obj.timer);
+obj.timer=setInterval(function(){},30);
+if(obj.offsetWidth==iTarget){
+  clearInterval(obj.timer);
+}else{
+    //...
+}
+</pre>
+
+  </p>
+<div id="yundong">
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+
+</body>
+<script type="text/javascript">
+window.onload=function(){
+  var parent = document.getElementById('yundong');
+  var oDiv = parent.getElementsByTagName('div');
+
+  for (var i = oDiv.length - 1; i >= 0; i--) {
+    oDiv[i].timer=null;
+
+    oDiv[i].onmouseover=function(){
+          starMove(this,'width',400);
+    };
+
+    oDiv[i].onmouseout=function(){
+          starMove(this,'width',100);
+    };
+
+  }
+
+};
+
+
+function getStyle (obj, name){
+  if(obj.currentStyle){
+     return obj.currentStyle[name];
+  }else{
+    return getComputedStyle(obj,false)[name];
+  }
+}
+
+// function starMove (obj,iTarget) {
+//   clearInterval(obj.timer);
+
+//   obj.timer=setInterval(function(){
+//     var current = parseInt( getStyle(obj,'width') );
+//     var speed =(iTarget-current)/6;
+//     speed=speed>0?Math.ceil(speed):Math.floor(speed);
+//     if(current==iTarget){
+//       clearInterval(obj.timer);
+//     }else{
+//       obj.style.width=current+speed+'px';
+//     }
+
+//   }, 30);
+// }
+
+function starMove (obj, attr, iTarget) {
+  clearInterval(obj.timer);
+
+  obj.timer=setInterval(function(){
+    var current = parseInt( getStyle(obj,attr) );
+    var speed =(iTarget-current)/6;
+    speed=speed>0?Math.ceil(speed):Math.floor(speed);
+    if(current==iTarget){
+      clearInterval(obj.timer);
+    }else{
+      obj.style[attr]=current+speed+'px';
+    }
+
+  }, 30);
+}
+
+
+
+</script>
+</html>

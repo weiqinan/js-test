@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>js运动基础1</title>
+  <link rel="stylesheet" type="text/css" href="reset.css">
+  <style type="text/css">
+.qiu{width: 200px; height: 200px; background: #eee;
+border-radius: 100px; position: absolute; left: 20px;
+top:100px;}
+</style>
+
+</head>
+<body>
+<p>定时器关闭只是从下一次开始不执行这个定时器了，当前的定时器函数里的其他代码还是要执行的。
+  所以<br/><pre>
+    if( qiu.offsetLeft >=300 ){
+        clearInterval(timmer);
+      }
+      qiu.style.left=qiu.offsetLeft+10+'px';
+  </pre>
+  这段每次点击按钮的时候还会移动10px。
+  这样写
+  <pre>
+    if( qiu.offsetLeft >=300 ){
+        clearInterval(timmer);
+      }else{
+        qiu.style.left=qiu.offsetLeft+10+'px';
+      }
+  </pre><br/>
+  每点击一下按钮就会触发一个定时器，好几个定时器开启的时候物体的位移就会增大。
+  所以运动越来越快，要只保证开的是一个定时器则要在一开始就关掉其他的定时器，然后重新开。
+  <pre>
+    clearInterval(timmer);
+  </pre>
+  运动框架流程：<br/>
+  在开始运动前，关闭已有定时器。<br/>
+  把运动和停止分隔开（if/else） ，不可能存在运动和停止之外的中间状态。
+  <br/>
+  move()==>move2();
+  speed可以根据原始位置来判断是往哪个方向运动。所以可以省略<br/>
+  用js来操作透明度：.me{filter:alpha(opacity:30); opacity: .3;}
+  <pre>
+  var alpha=20;
+  oDiv.style.filter='alpha(opacity:'+alpha+')';
+  oDiv.style.opacity=alpha/100;
+  </pre>
+  <b>运动终止条件<br/>
+  匀速运动：距离足够近<br/>
+  <pre>if( Math.abs(qiu.offsetLeft - pos)<=7 ){
+        clearInterval(timmer);
+        qiu.style.left=pos+'px';
+        }else{}
+        </pre>
+  缓冲运动：两点重合</b>
+  </p>
+  <br/>
+  <div style="position:relative">
+    <input type="button" value="运动" id="btn1" />
+
+    <div class="qiu" id="qiu"></div>
+  </div>
+<style type="text/css">
+.share{
+  width: 200px; height: 300px; background: #ccc; position: absolute;
+  left: -200px; top:300px;
+}
+.share span{position: absolute; right: -30px; width: 30px; height: 80px;
+top: 40px; background: red;}
+</style>
+  <div class="share" id="share">
+    <span>分<br/>享<br/>到</span>
+  </div>
+
+</body>
+<script type="text/javascript">
+window.onload=function(){
+  var btn1 = document.getElementById('btn1'),
+       qiu = document.getElementById('qiu'),
+    share = document.getElementById('share'),
+    timmer = null;
+
+  //匀速运动
+  // btn1.onclick=function(){
+  //   clearInterval(timmer);
+  //   timmer = setInterval(function(){
+  //     console.log(qiu.style.left);
+  //     if (parseInt(qiu.style.left)>=200) {
+  //       //alert(3);
+  //     }
+  //     if( qiu.offsetLeft >=300 ){
+  //       clearInterval(timmer);
+  //     }else{
+  //       qiu.style.left=qiu.offsetLeft+10+'px';
+  //     }
+
+  //   },30);
+  // };
+
+  btn1.onclick=function(){
+    moveyunsu(400);
+  };
+
+  function move(pos,speed){
+    clearInterval(timmer);
+    timmer = setInterval(function(){
+
+      if( share.offsetLeft == pos ){
+        clearInterval(timmer);
+      }else{
+        share.style.left=share.offsetLeft+speed+'px';
+      }
+
+    },30);
+  }
+
+  function moveyunsu(pos){
+    clearInterval(timmer);
+    timmer = setInterval(function(){
+      if(qiu.offsetLeft>pos){
+        speed=-7;
+      }else{
+        speed=7;
+      }
+      if( Math.abs(qiu.offsetLeft - pos)<=7 ){
+        clearInterval(timmer);
+        qiu.style.left=pos+'px';
+      }else{
+        qiu.style.left=qiu.offsetLeft+speed+'px';
+      }
+
+    },30);
+  }
+  //speed可以根据原始位置来判断是往哪个方向运动。所以可以省略
+  function move2(pos){
+    var speed=0;
+    clearInterval(timmer);
+    if(share.offsetLeft > pos){
+      speed=-10;
+    }else{
+      speed=10;
+    }
+    timmer = setInterval(function(){
+
+      if( share.offsetLeft == pos ){
+        clearInterval(timmer);
+      }else{
+        share.style.left=share.offsetLeft+speed+'px';
+      }
+
+    },30);
+  }
+
+  share.onmouseover=function(){
+    //move(0,10);
+    move2(0);
+  };
+  share.onmouseout=function(){
+    //move(-200,-10);
+    move2(-200);
+  };
+
+
+
+};
+</script>
+</html>

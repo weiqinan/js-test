@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>js运动基础-缓冲运动</title>
+  <link rel="stylesheet" type="text/css" href="reset.css">
+  <style type="text/css">
+.qiu{width: 200px; height: 200px; background: #eee;
+border-radius: 100px; position: absolute; right:40px;
+bottom: 0px;}
+.line{position: absolute; left: 300px; height: 300px; width: 1px; background: #000; top: 0;}
+.qiu2{position: absolute; right: 0; top:50px; width: 30px; height: 100px; background: red;}
+</style>
+
+</head>
+<body style="height:1200px;">
+<p>
+模拟ie6不能实现fixed效果的原理。加上定时器让top缓慢变化接地，不会出现突然掉下去的闪动效果。<br/>
+qiu2//当目标值为有小数时，它会来回上下运动。<br/>
+所以要对目标值取整
+</p>
+  <br/>
+
+  <div class="qiu" id="qiu"></div>
+  <div class="qiu2" id="qiu2"></div>
+
+
+
+</body>
+<script type="text/javascript">
+var btn1 = document.getElementById('btn1'),
+       qiu = document.getElementById('qiu'),
+    share = document.getElementById('share'),
+    timmer = null;
+
+  window.onscroll =function(){
+     var scrollTop = document.documentElement.scrollTop||document.body.scrollTop;
+     //qiu.style.bottom=-scrollTop;
+     //console.log(scrollTop);
+     //窗口可见区域的高度 document.documentElement.clientHeight
+     console.log(document.body.clientHeight,document.documentElement.clientHeight);
+     var iTarget=document.documentElement.clientHeight-qiu.offsetHeight+scrollTop;
+     console.log(iTarget);
+     move(iTarget);
+
+     //qiu2.style.top = (document.documentElement.clientHeight - qiu2.offsetHeight)/2 + scrollTop +'px';
+     var iTarget2=(document.documentElement.clientHeight - qiu2.offsetHeight)/2 + scrollTop;
+     //当目标值为有小数时，它会来回上下运动。
+     //move2(iTarget2);
+
+     var iTarget3=parseInt((document.documentElement.clientHeight - qiu2.offsetHeight)/2) + scrollTop;
+     move2(iTarget3);
+
+
+  };
+
+  function move(iTarget){
+    clearInterval(timmer);
+    timmer = setInterval(function(){
+      var speed = (iTarget-qiu.offsetTop)/4;
+      speed=speed>0?Math.ceil(speed):Math.floor(speed);
+      //console.log(speed,qiu.offsetLeft);
+      if(qiu.offsetTop==iTarget){
+        clearInterval(timmer);
+      }else{
+        qiu.style.top=qiu.offsetTop+speed+'px';
+      }
+
+
+    },30);
+  }
+
+  function move2(iTarget){
+    clearInterval(timmer);
+    timmer = setInterval(function(){
+      var speed = (iTarget-qiu2.offsetTop)/4;
+      speed=speed>0?Math.ceil(speed):Math.floor(speed);
+      //console.log(speed,qiu.offsetLeft);
+      if(qiu2.offsetTop==iTarget){
+        clearInterval(timmer);
+      }else{
+        qiu2.style.top=qiu2.offsetTop+speed+'px';
+      }
+
+
+    },30);
+  }
+</script>
+</html>
