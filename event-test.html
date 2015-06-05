@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+  <title>事件冒泡</title>
+  <meta charset="UTF-8">
+  <link href="http://115.29.137.187/app/desktop/statics/css/default/style_min.css" rel="stylesheet" media="screen, projection">
+</head>
+<body>
+	  <style type="text/css">
+.m-show-box{width:500px; height:500px; position:absolute; top:100px; left:50%; margin-left:-250px; background: #fff; z-index: 26}
+.m-table-area{height: 440px; overflow: auto; padding: 10px; margin-top: 10px;}
+.m-show-box .dialog-box{height: 100%;}
+.gray-bg{background: #000; opacity: .4; position: absolute; z-index: 10; width: 100%; height: 100%;}
+  </style>
+  <div class="gray-bg" id="gray_bg" style="display:none;"></div>
+	<div class="m-show-box dialog" id="dialog" style="display:none;">
+		<div class="dialog-box">
+			<div class="dialog-head clearfix">
+	          <div class="dialog-title flt">编辑配送站</div>
+	          <em class="btn-close frt m-close-btn" id="close_btn">✖</em>
+	        </div>
+			<div class="m-table-area">
+				<div style="height:700px;"></div>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="box">
+		<input type="button" value="打开弹窗" id="btn"/>
+		<input type="button" value="按钮" id="btn2" />
+		<input type="button" value="按钮" id="btn3" />
+	</div>
+	<script type="text/javascript">
+
+var grayBg= document.getElementById('gray_bg');
+var dialog= document.getElementById('dialog');
+var btn =document.getElementById('btn');
+var close_btn=document.getElementById('close_btn');
+btn.onclick=function(){
+  grayBg.style.display='block';
+  dialog.style.display='block';
+}
+close_btn.onclick=function(){
+  grayBg.style.display='none';
+  dialog.style.display='none';
+}
+
+
+
+
+
+var btn2 =document.getElementById('btn2');
+btn2.onclick=function(){
+	alert(3);
+};
+btn2.onclick=null;//清空事件
+// addEventListener()和removeEventListener();
+//attachEvent() 和 detachEvent();
+//ie8及之前的版本只支持事件冒泡
+var btn3 =document.getElementById('btn3');
+function show(){
+	alert('btn3');
+}
+//btn3.addEventListener('click',show,false);
+//btn3.attachEvent('onclick',show);
+
+//跨浏览器的事件处理程序
+var eventUtil ={
+  addHandler:function(element,type,handler){
+  	if(element.addEventListener){
+      element.addEventListener(type,handler,false);
+  	}else if(element.attachEvent){
+      element.attachEvent('on'+type,handler);
+  	}else{
+      element['on'+type]=handler;
+      //element.onclick = element['onclick'];
+  	}
+  },
+  delHandler:function(element,type,handler){
+  	if(element.removeEventListener){
+      element.removeEventListener(type,handler,false);
+  	}else if(element.detachEvent){
+      element.detachEvent('on'+type,handler);
+  	}else{
+      element['on'+type]=null;
+  	}
+  },
+  getEvent:function(event){
+    return event?event:window.event;
+  },
+  getType:function(){
+  	return event.type;
+  },
+  getElement:function(event){
+    return event.target?event.target:event.srcElement;
+  },
+  preventDefault:function(event){
+  	//以属性的形式判断
+  	if(event.preventDefault){
+  	  event.preventDefault();
+  	}else{
+  	  event.returnValue=false;
+  	}
+  },
+  stopPropagation:function(event){
+    if(event.stopPropagation){
+    	event.stopPropagation();
+    }else{
+    	event.cancelBubble=true;
+    }
+  }
+};
+eventUtil.addHandler(btn3,'click',show);
+//eventUtil.delHandler(btn3,'click',show);
+
+//事件对象event 在ie8及之前是window.event;
+/*
+一、DOM中的事件对象
+1、type属性 用于获取事件类型
+2、target属性  用于获取事件目标
+3、stopPropagation()方法 阻止事件冒泡
+4、preventDefault()方法 阻止事件的默认行为
+
+二、IE中的事件对象
+1、type属性 用于获取事件类型
+2、srcElement属性 用于获取事件目标
+3、cancelBubble属性 用于阻止事件冒泡 设置为true表示阻止冒泡 设置为false表示不阻止冒泡
+4、returnValue属性 用于阻止事件的默认行为 设置为false表示阻止事件的默认行为
+*/
+function testEvent(e){
+	alert(e.type);
+}
+
+function getByClass(clsName,parent){
+  var oParent =parent?document.getElementById(parent):document,
+      eles =[],
+      elements =oParent.getElementByTagName('*');
+  for(var i =0, l=elements.length; i<l; i++){
+  	if(elements[i].className===className){
+  		eles.push(elements[i]);
+  	}
+  }
+  return eles;
+}
+
+//onmousedown:在用户按下任何鼠标按钮时触发
+// 鼠标事件都是在浏览器窗口中的特定位置上发生的。
+// 这个位置信息保存在事件的clientX和clientY属性中。
+// 所有浏览器都支持这两个属性，
+// 它们的值表示事件发生时鼠标指针在视口中的水平和垂直坐标。
+// 不包括页面滚动的距离。
+	</script>
+</body>
+</html>
